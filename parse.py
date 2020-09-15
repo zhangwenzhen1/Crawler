@@ -21,12 +21,23 @@ headers = {
               "vqV; BD_HOME=1",
     # "Referer": "https://www.baidu.com/?tn=78000241_12_hao_pg"
     }
-
-def retry_if_result_none(result):
-    return result is None
+# cookie ="BIDUPSID=286613A70588224F8DB57ADE2EF3C9E4; PSTM=1574049951; BAIDUID=286613A70588224FC0244BA4EF77A94D:FG=1; " \
+#         "BD_UPN=12314753; BDUSS=dhNVJtNn5LLUxpUko5MkpzOTNsV21obHFoZElBZE8teTV0UDV2b0lwUlhMZnRkRVFBQUFBJCQAAAAAAAAAAAEAAA" \
+#         "DUGTEjd2VuemhlbjkzOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFeg011XoNNdLV; " \
+#         "BDUSS_BFESS=dhNVJtNn5LLUxpUko5MkpzOTNsV21obHFoZElBZE8teTV0UDV2b0lwUlhMZnRkRVFBQUFBJCQAAAAAAAAAAAEAAADUGTEjd" \
+#         "2VuemhlbjkzOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFeg011XoNNdLV; H_WISE_SIDS" \
+#         "=154034_148078_153759_150830_153190_149355_150686_150075_156287_150086_148867_154763_156087_154605_151897_153628_" \
+#         "153444_154771_151532_151018_154950_146575_127969_154413_154175_152982_155905_155802_146732_155789_131423_154037" \
+#         "_154786_155539_154189_154791_144966_155354_155531_154619_154118_154802_154903_155238_155932_154146_147552_156101" \
+#         "_153448_152310_155390_154349_155865_110085; BDORZ=FFFB88E999055A3F8A630C64834BD6D0; plus_cv=1::m:49a3f4a6; " \
+#         "yjs_js_security_passport=7c04e2b4f2bd985d8b852896e116920a7205f87d_1600072536_js; H_PS_PSSID=32606_7523; " \
+#         "H_PS_645EC=4160ziOuxMZS8by7rZnTpROCkgiU%2FR4AzL7Q%2FlKcq98DwwRqcz6K2KqcO6gifDy2qlq6JIxfbYQ; delPer=0; " \
+#         "BD_CK_SAM=1; PSINO=1; BDRCVFR[B3iNXbc_kLT]=OjjlczwSj8nXy4Grjf8mvqV; BD_HOME=1"
+# cookie_dict = {i.split("=")[0]:i.split("=")[-1]for i in cookie.split(";")}
+# print(cookie_dict)
 
 '''专门请求URL的方法'''
-@retry(stop_max_attempt_number=3,retry_on_result = retry_if_result_none) #让装饰函数反复执行三次，三次全部报错才会报错，中间有一次正常，则程序继续执行
+@retry(stop_max_attempt_number=3) #让装饰函数反复执行三次，三次全部报错才会报错，中间有一次正常，则程序继续执行
 def _parse_urlq(url):
     print("*" * 100)
     response = requests.get(url, headers=headers, timeout=5)
