@@ -22,9 +22,15 @@ print(retl)
 
 for table in retl :
     item = {}
-    item["title"] = table.xpath(".//div[@class='pl2']/a/text()")[0].replace("/","").strip()
-    item["href"] = table.xpath(".//div[@class='pl2']/a/@href")[0]
-    item["img"] = table.xpath(".//a[@class='nbg']/img//@src")[0]
-    item["comment_num"] = table.xpath("//span[@class='pl']/text()")[0]
-    item["rating_num"] = table.xpath("//span[@class='rating_nums']/text()")[0]
+    ##防止抓取内容为空报错，用if else语句做是否为空判断
+    item["title"] = table.xpath(".//div[@class='pl2']/a/text()")[0].replace("/","").strip()  \
+        if len(table.xpath(".//div[@class='pl2']/a/text()")[0]) >0 else None
+    item["href"] = table.xpath(".//div[@class='pl2']/a/@href")[0] if len(table.xpath(".//div[@class='pl2']/a/@href")[0])\
+                                                                     >0 else None
+    item["img"] = table.xpath(".//a[@class='nbg']/img//@src")[0]  if len(table.xpath(".//a[@class='nbg']/img//@src")[0])\
+                                                                     > 0 else None
+    item["comment_num"] = table.xpath("//span[@class='pl']/text()")[0] if len(table.xpath("//span[@class='pl']/text()")
+                                                                              [0]) >0 else None
+    item["rating_num"] = table.xpath("//span[@class='rating_nums']/text()")[0]\
+        if len(table.xpath("//span[@class='rating_nums']/text()")[0])>0 else None
     print(item)

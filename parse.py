@@ -1,7 +1,7 @@
 # utf-8
 import requests
 from retrying import retry
-
+'''
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
                   "Chrome/85.0.4183.102 Safari/537.36",
@@ -21,6 +21,9 @@ headers = {
               "vqV; BD_HOME=1",
     # "Referer": "https://www.baidu.com/?tn=78000241_12_hao_pg"
     }
+'''
+headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36",
+           "Referer": "https://m.douban.com/tv/american"}
 # cookie ="BIDUPSID=286613A70588224F8DB57ADE2EF3C9E4; PSTM=1574049951; BAIDUID=286613A70588224FC0244BA4EF77A94D:FG=1; " \
 #         "BD_UPN=12314753; BDUSS=dhNVJtNn5LLUxpUko5MkpzOTNsV21obHFoZElBZE8teTV0UDV2b0lwUlhMZnRkRVFBQUFBJCQAAAAAAAAAAAEAAA" \
 #         "DUGTEjd2VuemhlbjkzOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFeg011XoNNdLV; " \
@@ -38,14 +41,14 @@ headers = {
 
 '''专门请求URL的方法'''
 @retry(stop_max_attempt_number=3) #让装饰函数反复执行三次，三次全部报错才会报错，中间有一次正常，则程序继续执行
-def _parse_urlq(url):
+def _parse_url(url):
     print("*" * 100)
     response = requests.get(url, headers=headers, timeout=5)
     return response.content.decode()
 
 def parse_url(url):
     try:
-        html_str = _parse_urlq(url)
+        html_str = _parse_url(url)
     except:
          html_str = None
     return html_str
